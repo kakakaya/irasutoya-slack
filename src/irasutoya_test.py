@@ -28,3 +28,16 @@ class TestIrasutoyaEntry(TestCase):
         eq_(ie.title, title)
         eq_(ie.description, desc)
         eq_(len(ie.illusts), illust_length)
+
+    @raises(ValueError)
+    def test_bad_url(self):
+        url = 'https://kakakaya.xyz'
+        irasutoya.IrasutoyaEntry(url)
+
+    def test_special_entry(self):
+        url = 'http://www.irasutoya.com/2013/08/kotsu.html'
+        title = '検索のコツ'
+        ie = irasutoya.IrasutoyaEntry(url)
+        eq_(ie.url, url)
+        eq_(ie.title, title)
+        ok_(ie.is_special_page)
